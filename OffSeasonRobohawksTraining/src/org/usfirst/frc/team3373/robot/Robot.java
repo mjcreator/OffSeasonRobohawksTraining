@@ -8,6 +8,10 @@
 package org.usfirst.frc.team3373.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+//import edu.wpi.first.wpilibj.DigitalInput;
+//import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SerialPort;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,15 +28,42 @@ public class Robot extends IterativeRobot {
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	SupremeTalon talon4;
+	//SupremeTalon talon2;
+	//SupremeTalon talon3;
+	
+	//DigitalInput clicker;
+	
+	//AnalogInput in;
+	
+	AHRS ahrs;
+	
+	SuperJoystick driver;
+	
+	int LX = 0;
+	int LY = 1;
+	int Ltrigger = 2;
+	int Rtrigger = 3;
+	int RX = 4;
+	int RY = 5;
+	
 	@Override
 	public void robotInit() {
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		
+		talon4 = new SupremeTalon(4);
+		//talon2 = new SupremeTalon(2);
+		//talon3 = new SupremeTalon(3);
+		
+		//in = new AnalogInput(1);
+		
+		//clicker = new DigitalInput(0);
+		
+		ahrs = new AHRS(SerialPort.Port.kUSB);
+		
+		driver = new SuperJoystick(0);
 	}
 
 	/**
@@ -75,6 +106,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		/*boolean x = clicker.get();
+		if(x) {
+			talon4.set(0.5);
+		} else if (!x) {
+			talon4.set(0);
+		}*/
+		//double x = (((double) in.getValue()) -2047) / 2047;
+		talon4.set(ahrs.getPitch()/90);
+		
 	}
 
 	/**
