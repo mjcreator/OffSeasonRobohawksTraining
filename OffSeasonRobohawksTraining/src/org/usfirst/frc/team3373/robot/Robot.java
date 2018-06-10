@@ -73,6 +73,9 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode
 	 */
+	public void testInit() {
+		System.out.println("Hello World");
+	}
 	@Override
 	public void testPeriodic() {
 	}
