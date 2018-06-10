@@ -16,6 +16,7 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
+	SuperJoystick joystick1 = new SuperJoystick(0);
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -78,6 +79,10 @@ public class Robot extends IterativeRobot {
 	}
 	@Override
 	public void testPeriodic() {
+		if(joystick1.isAPushed()){
+			System.out.println("Hello World");
+		}
+		joystick1.clearButtons();
 	}
 }
 
