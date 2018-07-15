@@ -1,10 +1,15 @@
 package org.usfirst.frc.team3373.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,8 +24,11 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	SuperJoystick joystick1 = new SuperJoystick(0);
+	private DigitalInput lim = new DigitalInput(0);
+	private AHRS gyro = new AHRS(SerialPort.Port.kUSB);
 	private WPI_TalonSRX motor2 = new WPI_TalonSRX(2);
 	private WPI_TalonSRX motor3 = new WPI_TalonSRX(3);
+	private WPI_TalonSRX motor4 = new WPI_TalonSRX(4);
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -83,8 +91,11 @@ public class Robot extends IterativeRobot {
 	}
 	@Override
 	public void testPeriodic() {
-		motor2.set(joystick1.getRawAxis(1));
-		motor3.set(joystick1.getRawAxis(5));
+		//System.out.println(gyro.getPitch());
+		SmartDashboard.putNumber("Pitch", gyro.getPitch());
+		SmartDashboard.putNumber("Roll", gyro.getRoll());
+		SmartDashboard.putNumber("Yaw", gyro.getYaw());
+		motor2.set(gyro.getPitch()/180.0);
 		joystick1.clearButtons();
 	}
 }
