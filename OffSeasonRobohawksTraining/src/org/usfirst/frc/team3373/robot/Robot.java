@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3373.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +19,8 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	SuperJoystick joystick1 = new SuperJoystick(0);
+	private WPI_TalonSRX motor2 = new WPI_TalonSRX(2);
+	private WPI_TalonSRX motor3 = new WPI_TalonSRX(3);
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -79,9 +83,8 @@ public class Robot extends IterativeRobot {
 	}
 	@Override
 	public void testPeriodic() {
-		if(joystick1.isAPushed()){
-			System.out.println("Hello World");
-		}
+		motor2.set(joystick1.getRawAxis(1));
+		motor3.set(joystick1.getRawAxis(5));
 		joystick1.clearButtons();
 	}
 }
