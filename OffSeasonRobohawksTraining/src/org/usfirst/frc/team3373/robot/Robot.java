@@ -8,7 +8,8 @@
 package org.usfirst.frc.team3373.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SerialPort;
+//import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
+	private double bumpLimit = 1;
 
 	SupremeTalon talon4;
 	//SupremeTalon talon2;
@@ -50,7 +52,7 @@ public class Robot extends IterativeRobot {
 		//talon2 = new SupremeTalon(2);
 		//talon3 = new SupremeTalon(3);
 		
-		ahrs = new SuperAHRS(SerialPort.Port.kUSB);
+		ahrs = new SuperAHRS(SPI.Port.kMXP);
 		
 		driver = new SuperJoystick(0);
 	}
@@ -93,6 +95,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		ahrs.reset();
+		ahrs.resetBump();
 	}
 
 	/**
@@ -100,7 +103,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		System.out.println(ahrs.getRotation());
+		
 	}
 
 	/**
