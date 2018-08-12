@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3373.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -46,12 +45,6 @@ public class SupremeTalon {
 	public void set(double speed) {
 		if (isFound)
 			talon.set(speed);
-	}
-	
-	public void set(ControlMode control, double speed){
-		if(isFound){
-			talon.set(control, speed);
-		}
 	}
 
 	/*public void changeControlMode(TalonControlMode mode) {
@@ -136,7 +129,7 @@ public class SupremeTalon {
 				this.set(speed);*/
 				currentSpeed = currentSpeed + time * (speed - currentSpeed);
 				if(currentSpeed != speed)
-					//System.out.println(currentSpeed);
+					System.out.println(currentSpeed);
 				talon.set(currentSpeed);
 			}else{
 				talon.set(speed);
@@ -152,27 +145,10 @@ public class SupremeTalon {
 		return 42;
 	}
 	public double getRawSensor(){
-		if(isFound){
 		return talon.getSensorCollection().getAnalogInRaw();
-		}else{
-		return 42;
-		}
 	}
 	public void setBrakeMode(){
-		if(isFound)
 		talon.setNeutralMode(NeutralMode.Brake);
-	}
-	
-	public void setEncPosition(int pos){
-		if(isFound)
-		talon.getSensorCollection().setQuadraturePosition(pos, 0);
-	}
-	public int getEncPosition(){
-		if(isFound){
-			return talon.getSensorCollection().getQuadraturePosition();
-		}else{
-			return 42;
-		}
 	}
 	/*public void setVoltageCompensationRampRate(double r8){ //r8 == rate
 		if(isFound){

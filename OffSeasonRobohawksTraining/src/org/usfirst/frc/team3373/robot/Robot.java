@@ -1,8 +1,15 @@
-
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team3373.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+//import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,16 +25,36 @@ public class Robot extends IterativeRobot {
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
+	private double bumpLimit = 1;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	SupremeTalon talon4;
+	//SupremeTalon talon2;
+	//SupremeTalon talon3;
+	
+	SuperAHRS ahrs;
+	
+	SuperJoystick driver;
+	
+	int LX = 0;
+	int LY = 1;
+	int Ltrigger = 2;
+	int Rtrigger = 3;
+	int RX = 4;
+	int RY = 5;
+	
 	@Override
 	public void robotInit() {
 		m_chooser.addDefault("Default Auto", kDefaultAuto);
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		
+		talon4 = new SupremeTalon(4);
+		//talon2 = new SupremeTalon(2);
+		//talon3 = new SupremeTalon(3);
+		
+		ahrs = new SuperAHRS(SPI.Port.kMXP);
+		
+		driver = new SuperJoystick(0);
 	}
 
 	/**
@@ -64,12 +91,19 @@ public class Robot extends IterativeRobot {
 				break;
 		}
 	}
+	
+	@Override
+	public void teleopInit() {
+		ahrs.reset();
+		ahrs.resetBump();
+	}
 
 	/**
 	 * This function is called periodically during operator control.
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
 	}
 
 	/**
