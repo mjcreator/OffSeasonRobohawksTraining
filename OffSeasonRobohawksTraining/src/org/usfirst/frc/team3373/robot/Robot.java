@@ -25,15 +25,12 @@ public class Robot extends IterativeRobot {
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
-	private double bumpLimit = 1;
-
-	SupremeTalon talon4;
-	//SupremeTalon talon2;
-	//SupremeTalon talon3;
 	
 	SuperAHRS ahrs;
 	
 	SuperJoystick driver;
+	
+	AutonomousControl AC;
 	
 	int LX = 0;
 	int LY = 1;
@@ -48,13 +45,11 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
 		
-		talon4 = new SupremeTalon(4);
-		//talon2 = new SupremeTalon(2);
-		//talon3 = new SupremeTalon(3);
-		
 		ahrs = new SuperAHRS(SPI.Port.kMXP);
 		
 		driver = new SuperJoystick(0);
+		
+		AC = new AutonomousControl(ahrs);
 	}
 
 	/**
@@ -74,6 +69,11 @@ public class Robot extends IterativeRobot {
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
 		System.out.println("Auto selected: " + m_autoSelected);
+		
+		if (AC.start("Auto_1") == false)
+			System.out.println("Start failed");
+		
+		AC.run();
 	}
 
 	/**
