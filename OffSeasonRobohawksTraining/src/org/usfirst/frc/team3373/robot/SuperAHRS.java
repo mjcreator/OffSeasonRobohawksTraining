@@ -14,6 +14,8 @@ public class SuperAHRS extends AHRS {
 		previousAccelerationZ = super.getWorldLinearAccelZ();
 		hasBumped = false;
 	}
+	
+	//Gets absolute yaw rotation from 0-360*
 	public float getRotation() {
 		float rotation;
 		if (super.getYaw() >= 0) {
@@ -24,6 +26,7 @@ public class SuperAHRS extends AHRS {
 		return rotation;
 	}
 	
+	//Gets change of acceleration in z direction
 	private double getZJerk() {
 		double currentAccel = super.getWorldLinearAccelZ();
 		double deltaAccel = currentAccel - previousAccelerationZ;
@@ -31,12 +34,14 @@ public class SuperAHRS extends AHRS {
 		return deltaAccel/.01;
 	}
 	
+	//Checks if bumb is over a certain size and returns if it has bumped
 	public boolean hasHitBump (double amount) {
-		if(Math.abs(this.getZJerk())>amount)
+		if(Math.abs(this.getZJerk()) > amount)
 			hasBumped = true;
 		return hasBumped;
 	}
 	
+	//Resets hasBumped to false
 	public void resetBump() {
 		hasBumped = false;
 	}
