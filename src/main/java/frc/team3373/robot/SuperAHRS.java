@@ -1,6 +1,7 @@
-package org.usfirst.frc.team3373.robot;
+package frc.team3373.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.SPI;
 
 public class SuperAHRS extends AHRS {
@@ -16,12 +17,17 @@ public class SuperAHRS extends AHRS {
 	}
 	public float getRotation() {
 		float rotation;
-		if (super.getYaw() >= 0) {
+		rotation=(360-super.getYaw())%360;
+		
+		/*if (super.getYaw() >= 0) {
 			rotation = super.getYaw();
 		} else {
 			rotation = (180 - Math.abs(super.getYaw())) + 180;
-		}
+		}*/
 		return rotation;
+	}
+	public float getRawRotation() {
+		return super.getYaw();
 	}
 	
 	private double getZJerk() {
